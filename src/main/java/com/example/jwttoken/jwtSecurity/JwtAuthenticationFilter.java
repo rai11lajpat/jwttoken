@@ -2,8 +2,7 @@ package com.example.jwttoken.jwtSecurity;
 
 import java.io.IOException;
 
-import org.apache.logging.log4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,17 +12,20 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public  class JwtAuthFilter extends OncePerRequestFilter{
+public  class JwtAuthenticationFilter extends OncePerRequestFilter{
 
-  private Logger logger = (Logger) LoggerFactory.getLogger(OncePerRequestFilter.class);
+
+    // private Logger logger = (Logger) LoggerFactory.getLogger(OncePerRequestFilter.class);
     @Autowired
     private JwtHelper jwtHelper;
 
@@ -32,7 +34,7 @@ public  class JwtAuthFilter extends OncePerRequestFilter{
     private UserDetailsService userDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
 //        try {
 //            Thread.sleep(500);
@@ -43,7 +45,7 @@ public  class JwtAuthFilter extends OncePerRequestFilter{
 
         String requestHeader = request.getHeader("Authorization");
         //Bearer 2352345235sdfrsfgsdfsdf
-        logger.info(" Header :  {}", requestHeader);
+        logger.info(" Header :  {}"+ requestHeader);
         String username = null;
         String token = null;
         if (requestHeader != null && requestHeader.startsWith("Bearer")) {
@@ -85,8 +87,6 @@ public  class JwtAuthFilter extends OncePerRequestFilter{
                 //set the authentication
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                
-                
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
 

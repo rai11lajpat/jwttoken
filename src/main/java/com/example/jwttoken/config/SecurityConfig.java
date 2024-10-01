@@ -1,13 +1,16 @@
 package com.example.jwttoken.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.example.jwttoken.jwtSecurity.JwtAuthFilter;
+
 import com.example.jwttoken.jwtSecurity.JwtAuthenEntryPoint;
+import com.example.jwttoken.jwtSecurity.JwtAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
@@ -16,9 +19,10 @@ public class SecurityConfig {
     private JwtAuthenEntryPoint authenEntryPoint;
 
     @Autowired
-    private JwtAuthFilter authFilter;
+    private JwtAuthenticationFilter authFilter;
 
-    public <SecurityFilterChain> SecurityFilterChain SecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
@@ -32,7 +36,7 @@ public class SecurityConfig {
                 ;
         httpSecurity.addFilterBefore(authFilter,UsernamePasswordAuthenticationFilter.class);
 
-        return (SecurityFilterChain) httpSecurity.build();
+        return  httpSecurity.build();
     }
 
 }

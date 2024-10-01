@@ -2,8 +2,7 @@ package com.example.jwttoken.controlers;
 
 import javax.management.RuntimeErrorException;
 
-import org.apache.logging.log4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.jwttoken.Models.JwtReq;
 import com.example.jwttoken.Models.JwtResp;
 import com.example.jwttoken.jwtSecurity.JwtHelper;
+
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -30,8 +31,7 @@ public class AuthController {
 
     @Autowired
     private UserDetailsService userDetailsService;
-    @Autowired
-    private UserDetails userDetails;
+    
 
     @Autowired
     private JwtHelper jwtHelper;
@@ -39,7 +39,7 @@ public class AuthController {
     @Autowired
     private AuthenticationManager manager;
 
-    private Logger logger=(Logger) LoggerFactory.getLogger(AuthController.class);
+    //private Logger logger = LoggerFactory.getLogger(AuthController.class);
 
 
    @PostMapping("/login")
@@ -68,6 +68,11 @@ public class AuthController {
             throw new RuntimeErrorException(null, "Invald user name password");
         }
 
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public String ExceptionHandler(){
+        return "Credential invalid..";
     }
     
 }
