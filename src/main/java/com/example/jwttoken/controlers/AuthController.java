@@ -2,7 +2,7 @@ package com.example.jwttoken.controlers;
 
 import javax.management.RuntimeErrorException;
 
-
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +39,7 @@ public class AuthController {
     @Autowired
     private AuthenticationManager manager;
 
-    //private Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private Logger logger = Logger.getLogger(AuthController.class);
 
 
    @PostMapping("/login")
@@ -53,7 +53,7 @@ public class AuthController {
         JwtResp response =JwtResp.builder()
         .jwtTokem(token)
         .username(userDetails.getUsername()).build();
-       
+       logger.info(response);
         return new ResponseEntity<>(response,HttpStatus.OK);
    }
 

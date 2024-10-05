@@ -1,7 +1,7 @@
 package com.example.jwttoken.jwtSecurity;
 
 import java.io.IOException;
-
+import org.jboss.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public  class JwtAuthenticationFilter extends OncePerRequestFilter{
 
 
-    // private Logger logger = (Logger) LoggerFactory.getLogger(OncePerRequestFilter.class);
+    private Logger logger = Logger.getLogger(OncePerRequestFilter.class);
     @Autowired
     private JwtHelper jwtHelper;
 
