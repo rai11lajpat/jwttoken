@@ -2,6 +2,7 @@ package com.example.jwttoken.controlers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.jwttoken.Entities.User;
 import com.example.jwttoken.Servise.UserServise;
 
 import java.security.Principal;
@@ -20,7 +21,7 @@ public class Home {
     UserServise userServise;
 
         @GetMapping("/home/user")
-        public List getMethodName() {
+        public Iterable<User> getMethodName() {
             System.out.println("home fireddddd....");
             return userServise.getuser();
         }

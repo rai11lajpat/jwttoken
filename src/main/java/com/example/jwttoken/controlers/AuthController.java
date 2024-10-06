@@ -14,8 +14,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.jwttoken.Entities.User;
 import com.example.jwttoken.Models.JwtReq;
 import com.example.jwttoken.Models.JwtResp;
+import com.example.jwttoken.Servise.UserServise;
 import com.example.jwttoken.jwtSecurity.JwtHelper;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,6 +34,8 @@ public class AuthController {
     @Autowired
     private UserDetailsService userDetailsService;
     
+    @Autowired
+    private UserServise userServise;
 
     @Autowired
     private JwtHelper jwtHelper;
@@ -57,6 +61,15 @@ public class AuthController {
         return new ResponseEntity<>(response,HttpStatus.OK);
    }
 
+   @PostMapping("/register")
+   public void registerUser(@RequestBody User user) {
+        userServise.createUser(user);
+       //TODO: process POST request
+       
+    
+   }
+   
+
 
 
 
@@ -64,8 +77,9 @@ public class AuthController {
     UsernamePasswordAuthenticationToken authentication=new UsernamePasswordAuthenticationToken(email, password);
         try {
             manager.authenticate(authentication);
-        } catch (BadCredentialsException e) {
-            throw new RuntimeErrorException(null, "Invald user name password");
+        } catch (BadCredentialsException exception) {
+            throw new RuntimeErrorException(null, "Invald user nasme password");
+            
         }
 
     }
