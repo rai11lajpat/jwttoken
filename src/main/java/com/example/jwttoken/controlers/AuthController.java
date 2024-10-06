@@ -78,7 +78,7 @@ public class AuthController {
         try {
             manager.authenticate(authentication);
         } catch (BadCredentialsException exception) {
-            throw new RuntimeErrorException(null, "Invald user nasme password");
+            throw new RuntimeErrorException(null, "Invald user name password!");
             
         }
 
