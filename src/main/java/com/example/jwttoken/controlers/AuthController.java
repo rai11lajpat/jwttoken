@@ -64,15 +64,9 @@ public class AuthController {
    @PostMapping("/register")
    public void registerUser(@RequestBody User user) {
         userServise.createUser(user);
-       //TODO: process POST request
        
-    
    }
    
-
-
-
-
    private void doAuthenticate(String email,String password){
     UsernamePasswordAuthenticationToken authentication=new UsernamePasswordAuthenticationToken(email, password);
         try {
